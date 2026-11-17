@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { maxLength } from "zod";
 
 const reportSchema = new mongoose.Schema({
     owner: {

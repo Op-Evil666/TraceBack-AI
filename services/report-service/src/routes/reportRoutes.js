@@ -5,7 +5,7 @@ import validate from '../middlewares/schemaMiddleware.js';
 import upload from '../middlewares/uploadMiddleware.js';
 import authorizeAIService from '../middlewares/authorizeAIService.js';
 import authorizeAdminMiddleware from '../middlewares/authorizeAdminMiddleware.js';
-import { createReportSchema } from '../schemas/reportSchema.js';
+import { createReportSchema, updateReportSchema } from '../schemas/reportSchema.js';
 import paginationSchema from '../schemas/paginationSchema.js';
 import reportIdSchema from '../schemas/reportIdSchema.js';
 import statusSchema from "../schemas/statusSchema.js"
@@ -23,7 +23,7 @@ router.post("/", authenticate, upload.single("image"), validate(createReportSche
 router.get("/", authenticate, validate(paginationSchema, "query"), getAllReports);
 router.get("/my-reports", authenticate, validate(paginationSchema, "query"), getMyReports);
 router.get("/:id", authenticate, validate(reportIdSchema, "params"), getSpecificReport);
-router.patch("/:id", authenticate, validate(reportIdSchema, "params"), authorizeReportMiddleware, updateReport);
+router.patch("/:id", authenticate, validate(reportIdSchema, "params"), upload.single("image"), validate(updateReportSchema, "body"), authorizeReportMiddleware, updateReport);
 router.patch("/:id/ai-match", authorizeAIService, validate(reportIdSchema, "params"), validate(statusSchema, "body"), updateReportStatus);
 router.patch("/:id/status", authenticate, authorizeAdminMiddleware, validate(reportIdSchema, "params"), validate(statusSchema, "body"), authorizeReportMiddleware, updateReportStatus);
 router.delete("/:id", authenticate, validate(reportIdSchema, "params"), authorizeReportMiddleware, deleteReport);
