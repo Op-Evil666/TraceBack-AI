@@ -6,9 +6,11 @@ const getAllReports = async (req, res) =>{
     const totalReports = await Report.countDocuments();
     if(totalReports === 0){
         return res.status(200).json({
-            success: true,
-            reports: []
-        });
+        success: true,
+        totalReports: 0,
+        totalPages: 0,
+        reports: []
+    });
     }
     const totalPages = Math.ceil(totalReports/limit);
     if(page>totalPages){

@@ -6,9 +6,11 @@ const getAllReports = async (req, res) =>{
     const totalComplaints = await Complaints.countDocuments();
     if(totalComplaints === 0){
         return res.status(200).json({
-            success: true,
-            complaints: []
-        });
+  success: true,
+  totalComplaints: 0,
+  totalPages: 0,
+  complaints: []
+});
     }
     const totalPages = Math.ceil(totalComplaints/limit);
     if(page>totalPages){
@@ -18,7 +20,7 @@ const getAllReports = async (req, res) =>{
     const complaints = await Complaints.find().sort({ createdAt: -1 }).skip(skip).limit(limit);
     res.status(200).json({
         success: true,
-        totalReports,
+        totalComplaints,
         totalPages,
         complaints
     });

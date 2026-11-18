@@ -21,7 +21,7 @@ const router = express.Router();
 
 router.post("/", authenticate, upload.single("image"), validate(createComplaintSchema, "body"), createComplaint);
 router.get("/", authenticate, validate(paginationSchema, "query"), getAllComplaints);
-router.get("/my-reports", authenticate, validate(paginationSchema, "query"), getMyComplaints);
+router.get("/my-complaints", authenticate, validate(paginationSchema, "query"), getMyComplaints);
 router.get("/:id", authenticate, validate(complaintIdSchema, "params"), getSpecificComplaint);
 router.patch("/:id", authenticate, validate(complaintIdSchema, "params"), upload.single("image"), validate(updateComplaintSchema, "body"), authorizeComplaintMiddleware, updateComplaint);
 router.patch("/:id/ai-match", authorizeAIService, validate(complaintIdSchema, "params"), validate(statusSchema, "body"), updateComplaintStatus);
